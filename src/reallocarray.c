@@ -9,14 +9,7 @@
 
 void *reallocarray(void *ptr, size_t nmemb, size_t size)
 {
-  void *new_ptr = NULL;
-
   if (!ptr)
-    return malloc(nmemb * size);
-  new_ptr = malloc(nmemb * size);
-  if (!new_ptr)
     return NULL;
-  memcpy(new_ptr, ptr, nmemb * size);
-  free(ptr);
-  return new_ptr;
+  return realloc(ptr, nmemb * size);
 }

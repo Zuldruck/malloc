@@ -10,9 +10,13 @@
 void *realloc(void *ptr, size_t size)
 {
   void *new_ptr = NULL;
+  metadata_t *meta = NULL;
 
   if (!ptr)
     return malloc(size);
+  meta = get_metadata_from_ptr(ptr);
+  if (meta->size >= size)
+    return ptr;
   new_ptr = malloc(size);
   if (!new_ptr)
     return NULL;
