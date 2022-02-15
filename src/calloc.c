@@ -9,7 +9,6 @@
 
 void *calloc(size_t nmemb, size_t size)
 {
-  // my_printf("calloc(%d)\n", size * nmemb);
   void *ptr = malloc(size * nmemb);
 
   if (!ptr)

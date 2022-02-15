@@ -13,7 +13,6 @@ void free(void *ptr)
   
   if (!ptr)
     return;
-  // my_printf("free(%u)\n", ptr);
   meta = get_metadata_from_ptr(ptr);
   meta->free = true;
 }

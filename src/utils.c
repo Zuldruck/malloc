@@ -28,11 +28,10 @@ void *get_best_fit_block(size_t size)
 
   if (!memory)
     return NULL;
-  for (size_t i = 0; (size_t)memory + i < memory_end; i += to_metadata(memory + i)->size + sizeof(metadata_t)) {
+  for (size_t i = 0; (size_t)memory + i < memory_end;
+  i += to_metadata(memory + i)->size + sizeof(metadata_t)) {
     meta = to_metadata(memory + i);
-    // my_printf("%u\n", meta->size);
     if (meta->free && meta->size >= size && meta->size < best_fit_size) {
-      // my_printf("Block free fitting size at %u\n", meta);
       best_fit = memory + i;
       best_fit_size = meta->size;
     }
@@ -47,7 +46,8 @@ void *get_last_block(void)
 
   if (!memory)
     return NULL;
-  for (size_t i = 0; (size_t)memory + i < memory_end; i += to_metadata(memory + i)->size + sizeof(metadata_t))
+  for (size_t i = 0; (size_t)memory + i < memory_end;
+  i += to_metadata(memory + i)->size + sizeof(metadata_t))
     last_block = memory + i;
   return last_block;
 }

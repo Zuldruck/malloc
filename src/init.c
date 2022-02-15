@@ -7,21 +7,12 @@
 
 #include "malloc.h"
 
-void *init_malloc(size_t size)
+void init_blocks(size_t size)
 {
-  void *break_ptr = NULL;
-  size_t metadata_size = sizeof(metadata_t);
   size_t rest_size = 0;
+  void *break_ptr = sbrk(0);
+  size_t metadata_size = sizeof(metadata_t);
 
-  // my_printf("Initializing malloc...\n");
-  memory = memory_allocation(size);
-  // my_printf("Memory allocated\n");
-  if (!memory)
-    return NULL;
-  if (((size_t)memory + metadata_size) % 2 == 1)
-    memory += 1;
-  break_ptr = sbrk(0);
-  // my_printf("Before creating blocks\n");
   if ((size_t)break_ptr
   - ((size_t)memory + metadata_size + size) < metadata_size + 1) {
     size = (size_t)break_ptr - ((size_t)memory + metadata_size);
@@ -32,8 +23,18 @@ void *init_malloc(size_t size)
     ((size_t)memory + metadata_size + size + metadata_size);
     create_block(memory + metadata_size + size, &rest_size);
   }
-  // my_printf("After creating blocks\n");
+}
+
+void *init_malloc(size_t size)
+{
+  size_t metadata_size = sizeof(metadata_t);
+
+  memory = memory_allocation(size);
+  if (!memory)
+    return NULL;
+  if (((size_t)memory + metadata_size) % 2 == 1)
+    memory += 1;
+  init_blocks(size);
   to_metadata(memory)->free = false;
-  // my_printf("Returning ptr %u\n", memory + metadata_size);
   return memory + metadata_size;
 }
