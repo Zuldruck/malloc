@@ -7,6 +7,13 @@
 
 #include "my.h"
 
+void my_put_unsigned_nbr(unsigned int nb)
+{
+  if (nb >= 10)
+    my_put_unsigned_nbr(nb / 10);
+  my_putchar(nb % 10 + '0');
+}
+
 void print_format(const char *str, int i, va_list ap)
 {
   if (str[i] == 'd') {
@@ -20,6 +27,9 @@ void print_format(const char *str, int i, va_list ap)
   }
   if (str[i] == '%') {
     my_putchar('%');
+  }
+  if (str[i] == 'u') {
+    my_put_unsigned_nbr(va_arg(ap, unsigned int));
   }
 }
 
