@@ -21,17 +21,26 @@
 
   #define UNUSED __attribute__((unused))
 
-typedef struct metadata_s {
+typedef struct __attribute__((__packed__)) metadata_s {
   size_t size;
   bool free;
 } metadata_t;
 
-extern char *memory;
+extern void *memory;
 
 void *malloc(size_t size);
 void free(void *ptr);
 void *calloc(size_t nmemb, size_t size);
 void *realloc(void *ptr, size_t size);
 void *reallocarray(void *ptr, size_t nmemb, size_t size);
+
+void *get_best_fit_block(size_t size);
+metadata_t *get_metadata_from_ptr(void *ptr);
+metadata_t *to_metadata(void *block);
+void *memory_allocation(size_t size);
+void *init_malloc(size_t size);
+void *get_last_block(void);
+void create_block(void *block, size_t *size);
+void split_block(void *block, size_t size);
 
 #endif /* !MALLOC_H_ */

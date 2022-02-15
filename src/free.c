@@ -7,6 +7,13 @@
 
 #include "malloc.h"
 
-void free(void *ptr UNUSED)
+void free(void *ptr)
 {
+  metadata_t *meta = NULL;
+  
+  if (!ptr)
+    return;
+  // my_printf("free(%u)\n", ptr);
+  meta = get_metadata_from_ptr(ptr);
+  meta->free = true;
 }

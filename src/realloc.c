@@ -7,10 +7,13 @@
 
 #include "malloc.h"
 
-void* realloc(void *ptr, size_t size)
+void *realloc(void *ptr, size_t size)
 {
   void *new_ptr = NULL;
 
+  if (!ptr)
+    return malloc(size);
+  // my_printf("realloc(%d)\n", size);
   new_ptr = malloc(size);
   if (!new_ptr)
     return NULL;
