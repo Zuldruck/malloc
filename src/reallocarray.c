@@ -9,7 +9,5 @@
 
 void *reallocarray(void *ptr, size_t nmemb, size_t size)
 {
-  if (!ptr)
-    return NULL;
   return realloc(ptr, nmemb * size);
 }
