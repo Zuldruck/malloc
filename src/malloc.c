@@ -22,8 +22,6 @@ size_t get_sbrk_allocation(size_t size)
   size_t nb_pages = (size + sizeof(metadata_t) - available_space)
   / page_size + 1;
 
-  if (size == 0)
-    return 0;
   if (nb_pages % 2 == 1)
     nb_pages += 1;
   return nb_pages * page_size;
@@ -67,8 +65,6 @@ void *malloc(size_t size)
 {
   void *block = NULL;
 
-  if (size == 0)
-    return NULL;
   if (!memory)
     return init_malloc(size);
   block = get_best_fit_block(size);
