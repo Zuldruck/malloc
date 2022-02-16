@@ -29,6 +29,8 @@ void *realloc(void *ptr, size_t size)
 
   if (!ptr)
     return malloc(size);
+  if (size == 0)
+    return malloc(1);
   meta = get_metadata_from_ptr(ptr);
   next_block = get_next_block(meta);
   if (meta->size >= size)
