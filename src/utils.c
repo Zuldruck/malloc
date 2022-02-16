@@ -51,3 +51,13 @@ void *get_last_block(void)
     last_block = memory + i;
   return last_block;
 }
+
+void *get_next_block(void *block)
+{
+  metadata_t *meta = to_metadata(block);
+  size_t next_block_size = meta->size + sizeof(metadata_t);
+
+  if (block + next_block_size >= (void *)sbrk(0) - (sizeof(metadata_t) + 1))
+    return NULL;
+  return block + next_block_size;
+}

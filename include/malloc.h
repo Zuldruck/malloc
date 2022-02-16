@@ -42,5 +42,6 @@ void *init_malloc(size_t size);
 void *get_last_block(void);
 void create_block(void *block, size_t *size);
 void split_block(void *block, size_t size);
+void *get_next_block(void *block);
 
 #endif /* !MALLOC_H_ */
